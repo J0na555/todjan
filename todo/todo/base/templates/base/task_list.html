@@ -1,8 +1,3 @@
-{% extends "base/main.html" %}
-
-{% block content %}
-
-
 {% if request.user.is_authenticated %}
    <p>{{request.user}}</p>
    {% comment %} <a href="{% url 'logout' %}">Logout</a> {% endcomment %}
@@ -29,6 +24,7 @@
     {%for task in tasks%}
     <tr> 
         <td>{{task.title}} </td>
+        {% comment %} <td><a href='{% url 'task' task.id%}'>View</td> {% endcomment %}
         <td><a href='{% url 'task-update' task.id%}'>Edit</td>
         <td><a href='{% url 'task-delete' task.id%}'>Delete</td>
 
@@ -37,5 +33,3 @@
         <h3> No items in the list </h3>
     {%endfor%}
 </table>
-
-{% endblock content %}

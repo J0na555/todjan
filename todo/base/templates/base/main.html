@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todjan</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --bg-light: #f4f6f8;
+      --bg-dark: #1a1a1a;
+      --card-light: #ffffff;
+      --card-dark: #2b2b2b;
+      --text-light: #333;
+      --text-dark: #f1f1f1;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --border-radius: 12px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="light"] {
+      --bg: var(--bg-light);
+      --card: var(--card-light);
+      --text: var(--text-light);
+    }
+
+    [data-theme="dark"] {
+      --bg: var(--bg-dark);
+      --card: var(--card-dark);
+      --text: var(--text-dark);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Bitcount", system-ui;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: var(--card);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      transition: background-color 0.3s;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    h1, h2, h3 {
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--border-radius);
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .toggle-theme {
+      float: right;
+      background: none;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .toggle-theme:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .task-card {
+      background-color: #e4e4e4;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: var(--border-radius);
+      border-left: 5px solid var(--accent);
+      transition: background-color 0.3s;
+    }
+
+    [data-theme="dark"] .task-card {
+      background-color: #3b3b3b;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: #888;
+    }
+
+    .btn-group {
+    display: flex;
+    gap: 1rem; 
+    margin-top: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <button class="toggle-theme" onclick="toggleTheme()">🌓</button>
+
+    {% block content %}
+    <!-- Example usage in child templates:
+         <a href="{% url 'task-create' %}" class="btn btn-add">Add Task</a>
+         <a href="{% url 'task-update' task.id %}" class="btn btn-edit">Edit Task</a> 
+    -->
+    {% endblock content %}
+  </div>
+
+  <footer>
+    Made with ❤️ by Jonas • Todjan Project
+  </footer>
+
+  <script>
+    const toggleTheme = () => {
+      const html = document.documentElement;
+      const current = html.getAttribute("data-theme");
+      const next = current === "light" ? "dark" : "light";
+      html.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    };
+
+
+    (function () {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      }
+    })();
+  </script>
+</body>
+</html>
+
